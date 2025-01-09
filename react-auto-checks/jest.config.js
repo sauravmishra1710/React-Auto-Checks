@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   transform: {
     '^.+\\.jsx?$': 'babel-jest', // Transpile .js and .jsx files with Babel
   },
