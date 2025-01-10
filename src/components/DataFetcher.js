@@ -6,7 +6,7 @@ function DataFetcher() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {   
+    const fetchData = async () => {
       try {
         const response = await axios.get('https://jsonplaceholder.typicode.com/users');
         setUsers(response.data);
