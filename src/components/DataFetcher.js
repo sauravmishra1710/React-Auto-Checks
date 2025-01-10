@@ -4,7 +4,7 @@ import axios from 'axios';
 function DataFetcher() {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
-  // lint-staged with git pre-commit hook
+  // test lint-staged with git pre-commit hook
   useEffect(() => {
     const fetchData = async () => {
       try {
