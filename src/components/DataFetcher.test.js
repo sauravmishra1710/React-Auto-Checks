@@ -5,7 +5,7 @@ import axios from 'axios';
 import DataFetcher from './DataFetcher';
 
 jest.mock('axios');
-
+// test lint-staged with git pre-commit hook
 describe('DataFetcher Component', () => {
   it('displays fetched data', async () => {
     const mockData = [
