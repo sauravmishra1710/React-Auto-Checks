@@ -9,8 +9,8 @@ jest.mock('axios');
 describe('DataFetcher Component', () => {
   it('displays fetched data', async () => {
     const mockData = [
-      { id: 1, name: 'Test Post 1' },
-      { id: 2, name: 'Test Post 2' },
+      { id: 1, name: 'test user1' },
+      { id: 2, name: 'test user2' },
     ];
 
     axios.get.mockResolvedValue({ data: mockData });
@@ -19,8 +19,8 @@ describe('DataFetcher Component', () => {
     expect(screen.getByText(/Users/i)).toBeInTheDocument();
 
     await waitFor(() => {
-      expect(screen.getByText('Test Post 1')).toBeInTheDocument();
-      expect(screen.getByText('Test Post 2')).toBeInTheDocument();
+      expect(screen.getByText('test user1')).toBeInTheDocument();
+      expect(screen.getByText('test user2')).toBeInTheDocument();
     });
   });
 
