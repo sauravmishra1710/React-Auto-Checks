@@ -148,11 +148,11 @@ During the hook execution lint-staged will identify the *.js/.jsx files staged f
 
 To completely automate the lifecycle management of husky hooks & get the configuration complete as part of `npm isntall` itself, we will introduce the following custom scripts in package.json - 
 
-1. clean - this will clean the complete project (husky, package-lock & node_modules) & allow for re-installation.
-2. clean:install - this will run the clean script & trigger the installation of project.
-3. clean:husky - this will clean the husky configuration files & hook files. It will leave the empty .husky folder.
-4. husky-init - this will initialize the husky configuration, add the pre-commit hook script file with the command to execute lint on the staged files, add the pre-push hook script file & add the command to execute the jest test suite on the project.
-5. prepare: this will run as part of the post npm install command to initialize husky.
+1. **clean** - this will clean the complete project (husky, package-lock & node_modules) & allow for re-installation.
+2. **clean:install** - this will run the clean script & trigger the installation of project.
+3. **clean:husky** - this will clean the husky configuration files & hook files. It will leave the empty .husky folder.
+4. **husky-init** - this will initialize the husky configuration, add the pre-commit hook script file with the command to execute lint on the staged files, add the pre-push hook script file & add the command to execute the jest test suite on the project.
+5. **prepare** - this will run as part of the post npm install command to initialize husky.
 
 ```
     "clean": "npm run clean:husky && rimraf ./package-lock.json && rimraf ./node_modules",
