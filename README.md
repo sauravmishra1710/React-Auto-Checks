@@ -161,3 +161,18 @@ To completely automate the lifecycle management of husky hooks & get the configu
     "husky-init": "husky install && npx husky add .husky/pre-commit && echo npx lint-staged > .husky/pre-commit && npx husky add .husky/pre-push && echo npm run test:jest > .husky/pre-push",
     "prepare": "npm run build && npm run husky-init"
 ```
+**NOTE:** The hooks can be bypassed with the `--no-verify` option.
+
+## Hook Execution in Action
+### pre-commit
+<img width="1239" alt="lint-staged-pre-commit-hook" src="https://github.com/user-attachments/assets/35224597-a3e7-4529-be32-2cbf0cfbbfd9" />
+<img width="1239" alt="lint-staged-pre-commit-hook-complete" src="https://github.com/user-attachments/assets/7e8deb20-459c-42ca-9268-bd013f7db186" />
+
+### pre-push
+<img width="1239" alt="jest-pre-push-hook" src="https://github.com/user-attachments/assets/1835e9f0-7f89-4336-8cb3-d292d3585a46" />
+
+### Complete Workflow
+<img width="1328" alt="git_hook_workflow" src="https://github.com/user-attachments/assets/9ced9711-b59e-496a-a566-eac1d46ba2f8" />
+
+
+
