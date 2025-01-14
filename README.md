@@ -161,7 +161,9 @@ To completely automate the lifecycle management of husky hooks & get the configu
     "husky-init": "husky install && npx husky add .husky/pre-commit && echo npx lint-staged > .husky/pre-commit && npx husky add .husky/pre-push && echo npm run test:jest > .husky/pre-push",
     "prepare": "npm run build && npm run husky-init"
 ```
-**NOTE:** The hooks can be bypassed with the `-n` or `--no-verify` option.
+**NOTE:** <br>
+1. The hooks can be bypassed with the `-n` or `--no-verify` option.
+2. The above configurations are good to be executed from the git command line as well as any Git GUI like the Git desktop ot VS Code Git UI.
 
 ## Hook Execution in Action
 ### pre-commit
@@ -192,6 +194,12 @@ You might land into the following issues when executing the hooks.
    chmod ug+x .husky/*
    ```
    Reference: https://github.com/typicode/husky/issues/1177#issuecomment-1212831091
+
+3. `npx: command not found` - in Git GUI tools
+   
+   <img width="433" alt="npx_not_found_git_desktop" src="https://github.com/user-attachments/assets/cc9f3720-cae4-4bd0-8d6f-c622ca8d646c" />
+   
+   Resolution: Restart Git desktop or VS Code IDE and this should get resolved. However, if you still face issues after restarting, refer - [vscode-github-desktop-pre-commit-hook-npx-command-not-found](https://stackoverflow.com/questions/67115897/vscode-github-desktop-pre-commit-hook-npx-command-not-found).
    
 ## Conclusion
 
