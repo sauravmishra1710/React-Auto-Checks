@@ -96,7 +96,7 @@ npm install --save-dev husky
 ```
 
 ### Initialize Husky
-The init command sets up husky configuration in a project. It creates a **pre-commit** script within the .husky/ directory and updates the **prepare** script in package.json
+The init/install command sets up husky configuration in a project. It creates a **pre-commit** script within the .husky/ directory and updates the **prepare** script in package.json
 
 ```
 npx husky init
@@ -148,11 +148,11 @@ During the hook execution lint-staged will identify the *.js/.jsx files staged f
 
 To completely automate the lifecycle management of husky hooks & get the configuration complete as part of `npm isntall` itself, we will introduce the following custom scripts in package.json - 
 
-1. clean - this will clean the complete project (husky, package-lock & node_modules) & allow for re-installation.
-2. clean:install - this will run the clean script & trigger the installation of project.
-3. clean:husky - this will clean the husky configuration files & hook files. It will leave the empty .husky folder.
-4. husky-init - this will initialize the husky configuration, add the pre-commit hook script file with the command to execute lint on the staged files, add the pre-push hook script file & add the command to execute the jest test suite on the project.
-5. prepare: this will run as part of the post npm install command to initialize husky.
+1. **clean** - this will clean the complete project (husky, package-lock & node_modules) & allow for re-installation.
+2. **clean:install** - this will run the clean script & trigger the installation of project.
+3. **clean:husky** - this will clean the husky configuration files & hook files. It will leave the empty .husky folder.
+4. **husky-init** - this will initialize the husky configuration, add the pre-commit hook script file with the command to execute lint on the staged files, add the pre-push hook script file & add the command to execute the jest test suite on the project.
+5. **prepare** - this will run as part of the post npm install command to initialize husky.
 
 ```
     "clean": "npm run clean:husky && rimraf ./package-lock.json && rimraf ./node_modules",
@@ -161,3 +161,46 @@ To completely automate the lifecycle management of husky hooks & get the configu
     "husky-init": "husky install && npx husky add .husky/pre-commit && echo npx lint-staged > .husky/pre-commit && npx husky add .husky/pre-push && echo npm run test:jest > .husky/pre-push",
     "prepare": "npm run build && npm run husky-init"
 ```
+**NOTE:** <br>
+1. The hooks can be bypassed with the `-n` or `--no-verify` option.
+2. The above configurations are good to be executed from the git command line as well as any Git GUI like the Git desktop ot VS Code Git UI.
+
+## Hook Execution in Action
+### pre-commit
+<img width="1239" alt="lint-staged-pre-commit-hook" src="https://github.com/user-attachments/assets/35224597-a3e7-4529-be32-2cbf0cfbbfd9" />
+<img width="1239" alt="lint-staged-pre-commit-hook-complete" src="https://github.com/user-attachments/assets/7e8deb20-459c-42ca-9268-bd013f7db186" />
+
+### pre-push
+<img width="1239" alt="jest-pre-push-hook" src="https://github.com/user-attachments/assets/1835e9f0-7f89-4336-8cb3-d292d3585a46" />
+
+### Complete Workflow
+<img width="1328" alt="git_hook_workflow" src="https://github.com/user-attachments/assets/9ced9711-b59e-496a-a566-eac1d46ba2f8" />
+
+## Potential Issues & Solutions
+
+You might land into the following issues when executing the hooks.
+
+1. **No tests found related to files changed since last commit**<br>
+   When executing Jest as part of the pre=push hook, it is possible to land on this error.
+   
+   ![no_tests_found_after_last_commit_jest](https://github.com/user-attachments/assets/4d8935b1-ac78-47ad-b6b0-a3781b63e2b9)
+
+   The resolution is to modify the test script in package.json as - `"test": "react-scripts test --watchAll=false"`
+   Reference: https://stackoverflow.com/questions/76743844/react-18-with-husky-pre-commit-and-jest-no-tests-found-exiting-with-code-1
+   
+2. **Hook was ignored because it's not set as executable**<br>
+   This is a problem where **husky wasn't created taking into account the file permissions of Linux** during initialization.
+   ```
+   chmod ug+x .husky/*
+   ```
+   Reference: https://github.com/typicode/husky/issues/1177#issuecomment-1212831091
+
+3. `npx: command not found` - in Git GUI tools
+   
+   <img width="433" alt="npx_not_found_git_desktop" src="https://github.com/user-attachments/assets/cc9f3720-cae4-4bd0-8d6f-c622ca8d646c" />
+   
+   Resolution: Restart Git desktop or VS Code IDE and this should get resolved. However, if you still face issues after restarting, refer - [vscode-github-desktop-pre-commit-hook-npx-command-not-found](https://stackoverflow.com/questions/67115897/vscode-github-desktop-pre-commit-hook-npx-command-not-found).
+   
+## Conclusion
+
+Automating git checks as part of hooks with Jest and ESLint is a simple yet very powerful way to enhance the day-to-day development workflow & activities. Tools like Husky and Lint-Staged enable seamless integration of Git hooks with any project and ensures that issues are caught and resolved early, maintain consistent code quality, and prevent broken builds & functionality. These tools allow to be proactive & catch issues early in the lifecycle rather than reacting to a broken build or production failure.
