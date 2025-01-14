@@ -174,6 +174,25 @@ To completely automate the lifecycle management of husky hooks & get the configu
 ### Complete Workflow
 <img width="1328" alt="git_hook_workflow" src="https://github.com/user-attachments/assets/9ced9711-b59e-496a-a566-eac1d46ba2f8" />
 
+## Potential Issues & Solutions
+
+You might land into the following issues when executing the hooks.
+
+1. **No tests found related to files changed since last commit**<br>
+   When executing Jest as part of the pre=push hook, it is possible to land on this error.
+   
+   ![no_tests_found_after_last_commit_jest](https://github.com/user-attachments/assets/4d8935b1-ac78-47ad-b6b0-a3781b63e2b9)
+
+   The resolution is to modify the test script in package.json as - `"test": "react-scripts test --watchAll=false"`
+   Reference: https://stackoverflow.com/questions/76743844/react-18-with-husky-pre-commit-and-jest-no-tests-found-exiting-with-code-1
+   
+2. **Hook was ignored because it's not set as executable**<br>
+   This is a problem where **husky wasn't created taking into account the file permissions of Linux** during initialization.
+   ```
+   chmod ug+x .husky/*
+   ```
+   Reference: https://github.com/typicode/husky/issues/1177#issuecomment-1212831091
+   
 ## Conclusion
 
 Automating git checks as part of hooks with Jest and ESLint is a simple yet very powerful way to enhance the day-to-day development workflow & activities. Tools like Husky and Lint-Staged enable seamless integration of Git hooks with any project and ensures that issues are caught and resolved early, maintain consistent code quality, and prevent broken builds & functionality. These tools allow to be proactive & catch issues early in the lifecycle rather than reacting to a broken build or production failure.
