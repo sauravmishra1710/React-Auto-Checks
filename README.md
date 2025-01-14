@@ -96,7 +96,7 @@ npm install --save-dev husky
 ```
 
 ### Initialize Husky
-The init command sets up husky configuration in a project. It creates a **pre-commit** script within the .husky/ directory and updates the **prepare** script in package.json
+The init/install command sets up husky configuration in a project. It creates a **pre-commit** script within the .husky/ directory and updates the **prepare** script in package.json
 
 ```
 npx husky init
@@ -161,7 +161,7 @@ To completely automate the lifecycle management of husky hooks & get the configu
     "husky-init": "husky install && npx husky add .husky/pre-commit && echo npx lint-staged > .husky/pre-commit && npx husky add .husky/pre-push && echo npm run test:jest > .husky/pre-push",
     "prepare": "npm run build && npm run husky-init"
 ```
-**NOTE:** The hooks can be bypassed with the `--no-verify` option.
+**NOTE:** The hooks can be bypassed with the `-n` or `--no-verify` option.
 
 ## Hook Execution in Action
 ### pre-commit
@@ -174,5 +174,6 @@ To completely automate the lifecycle management of husky hooks & get the configu
 ### Complete Workflow
 <img width="1328" alt="git_hook_workflow" src="https://github.com/user-attachments/assets/9ced9711-b59e-496a-a566-eac1d46ba2f8" />
 
+## Conclusion
 
-
+Automating git checks as part of hooks with Jest and ESLint is a simple yet very powerful way to enhance the day-to-day development workflow & activities. Tools like Husky and Lint-Staged enable seamless integration of Git hooks with any project and ensures that issues are caught and resolved early, maintain consistent code quality, and prevent broken builds & functionality. These tools allow to be proactive & catch issues early in the lifecycle rather than reacting to a broken build or production failure.
