@@ -1,13 +1,13 @@
 # React Auto Checks
 ## Automating Commit Checks with Jest and ESLint
 
-Maintaining code quality has become an essential part in application development lifecycle to ensure applications remain robust & maintainable in the long run. However, enforcing consistent code styles, formatting, linting standards can be tedious and error-prone. Same goes with running unit tests manually to ensure the code changes made have not broken any existing functionality or tests. Rules can be enforced by teams to run these tests or lints manually before every code commit but they are easy to get missed in day to day tasks. Therefore, automating these steps becomes an essestial part of the development process to maintain a clean code base with consistent formatting style across project & ensuring existing functionality remains intact. 
+Maintaining code quality has become an essential part in application development lifecycle to ensure applications remain robust & maintainable in the long run. However, enforcing consistent code styles, formatting, linting standards can be tedious and error-prone. Same goes with running unit tests manually to ensure the code changes made have not broken any existing functionality or tests. Rules can be enforced by teams to run these tests or lints manually before every code commit but they are easy to get missed in day to day tasks. Therefore, automating these steps becomes an essential part of the development process to maintain a clean code base with consistent formatting style across project & ensuring existing functionality remains intact. 
 
 As part of this project we look at how we can define an automated solution that integrates **linting** and **testing** into the development workflow, ensuring that only high-quality code gets committed or pushed.
 
 **React Auto Checks** leverages tools like [Husky](https://github.com/typicode/husky), [Lint-Staged](https://github.com/lint-staged/lint-staged) to enforce **linting rules during git commit** and **run jest unit tests during git push**.
 
-Before getting into the specifcs of the automation setup, let's first go through the the basics of git hooks, husky, & lint-staged that we will be using for the process.
+Before getting into the specifcs of the automation setup, let's first go through the basics of git hooks, husky, & lint-staged that we will be using for the process.
 
 ## Git Hooks
 
@@ -76,12 +76,12 @@ Husky and Lint-Staged complement each other to enforce code quality standards du
    - If all lint checks pass, the commit proceeds.
    - If any of the lint check fails (not auto-fixable/warnings), the commit is aborted, prompting the developer to fix the issues before retrying to commit again.
 
-The above process/steps will remain same for the pre-push hook to execute the jest unit tests before any commit in pushed to the remote branch. If any of the unit tests fails, then the push operation is abortded, prompting the developer to fix the failing tests before retrying to push again.
+The above process/steps will remain same for the pre-push hook to execute the jest unit tests before any commit in pushed to the remote branch. If any of the unit tests fails, then the **push operation is aborted, prompting the developer to fix the failing tests** before retrying to push again.
 
 ## Benefits of Combining Git Hooks, Husky, Lint-Staged & Jest Test Suite
 
 1. **Enforce Consistency:** Ensures clean code is committed/pushed. Prevents bad code from being committed or pushed.
-2. **Improve Efficiency:** Lint-staged focuses on staged files, saving time during linting. However, for execuing the unit tests as part of the pre-push hook, the entire jest suite should be run to ensure functionality is not broken.
+2. **Improve Efficiency:** Lint-staged focuses on staged files, saving time during linting. However, for executing the unit tests as part of the pre-push hook, the entire jest suite should be run to ensure functionality is not broken.
 3. **Team Collaboration:** Ensures all contributors adhere to the same standards & are forced to fix any issues/failures before making a commit.
 4. **Automated Workflow:** Reduces manual overhead for executing tests or worrying about the code formatting/styling.
    
@@ -146,7 +146,7 @@ During the hook execution lint-staged will identify the *.js/.jsx files staged f
 
 #### Custom npm scripts
 
-To completely automate the lifecycle management of husky hooks & get the configuration complete as part of `npm isntall` itself, we will introduce the following custom scripts in package.json - 
+To completely automate the lifecycle management of husky hooks & get the configuration complete as part of `npm install` itself, we will introduce the following custom scripts in package.json - 
 
 1. **clean** - this will clean the complete project (husky, package-lock & node_modules) & allow for re-installation.
 2. **clean:install** - this will run the clean script & trigger the installation of project.
