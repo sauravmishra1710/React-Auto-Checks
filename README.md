@@ -1,7 +1,7 @@
 # React Auto Checks
 ## Automating Commit Checks with Jest and ESLint
 
-Maintaining code quality has become an essential part in application development lifecycle to ensure applications remain robust & maintainable in the long run. However, enforcing consistent code styles, formatting, linting standards can be tedious and error-prone. Same goes with running unit tests manually to ensure the code changes made have not broken any existing functionality or tests. Rules can be enforced by teams to run these tests or lints manually before every code commit but they are easy to get missed in day to day tasks. Therefore, automating these steps becomes an essential part of the development process to maintain a clean code base with consistent formatting style across project & ensuring existing functionality remains intact. 
+Maintaining code quality has become an essential part in the application development lifecycle to ensure applications remain robust & maintainable in the long run. However, enforcing consistent code styles, formatting, linting standards can be tedious and error-prone. Same goes with running unit tests manually to ensure the code changes made have not broken any existing functionality or tests. Rules can be enforced by teams to run these tests or lints manually before every code commit but they are easy to get missed in day to day tasks. Therefore, automating these steps becomes an essential part of the development process to maintain a clean code base with consistent formatting style across project & ensuring existing functionality remains intact. 
 
 As part of this project we look at how we can define an automated solution that integrates **linting** and **testing** into the development workflow, ensuring that only high-quality code gets committed or pushed.
 
@@ -24,7 +24,7 @@ Git hooks can be majorly categorized into two types -
 1. Client-Side Hooks.
 2. Server-Side Hooks.
 
-`Client-side hooks are triggered on local developer machines by actions such as code commit or merge, while server-side hooks are triggered operate on remote repositories by network operations such as receiving pushed commits.`
+`Client-side hooks are triggered on local developer machines by actions such as code commit or merge, while server-side hooks are triggered to operate on remote repositories by network operations such as receiving pushed commits.`
 
 **Client-Side Hooks**
    - **pre-commit:** This hook runs on the `git commit` command before Git checks for a **commit message** or **generates a commit object**. This can be used to run tests or code formatting operations to enfore a common styling approach to the files included for commit.
@@ -163,7 +163,7 @@ To completely automate the lifecycle management of husky hooks & get the configu
 ```
 **NOTE:** <br>
 1. The hooks can be bypassed with the `-n` or `--no-verify` option.
-2. The above configurations are good to be executed from the git command line as well as any Git GUI like the Git desktop ot VS Code Git UI.
+2. The above configurations are good to be executed from the git command line as well as any Git GUI like the Git desktop or VS Code Git UI.
 
 ## Hook Execution in Action
 ### pre-commit
