@@ -1,5 +1,5 @@
 # React Auto Checks
-## Automating Commit Checks with Jest and ESLint
+## Automate Git Commits with Husky & Lint-Staged
 
 ESLint & Jest unit tests are an integral part of almost every frontend project. ESlint help the development teams to maintain consistent code formatting & styles across projects. Jest ensures unit tests are well written & maintain the code coverage with every bit of code tested via unit tests, the new changes do not break any existing functionality. However, running lints & jests manually every time a code change is ready to be committed can be a tedious task. Rules can be enforced by teams to run these tests or lints manually before every code commits but they are easy to get missed in day to day tasks. Therefore, automating these steps becomes an essential part of the development process to maintain a clean code base with consistent formatting style across project & ensuring existing functionality remains intact. 
 
