@@ -1,7 +1,7 @@
 # React Auto Checks
 ## Automating Commit Checks with Jest and ESLint
 
-Maintaining code quality has become an essential part in the application development lifecycle to ensure applications remain robust & maintainable in the long run. However, enforcing consistent code styles, formatting, linting standards can be tedious and error-prone. Same goes with running unit tests manually to ensure the code changes made have not broken any existing functionality or tests. Rules can be enforced by teams to run these tests or lints manually before every code commit but they are easy to get missed in day to day tasks. Therefore, automating these steps becomes an essential part of the development process to maintain a clean code base with consistent formatting style across project & ensuring existing functionality remains intact. 
+ESLint & Jest unit tests are an integral part of almost every frontend project. ESlint help the development teams to maintain consistent code formatting & styles across projects. Jest ensures unit tests are well written & maintain the code coverage with every bit of code tested via unit tests, the new changes do not break any existing functionality. However, running lints & jests manually every time a code change is ready to be committed can be a tedious task. Rules can be enforced by teams to run these tests or lints manually before every code commits but they are easy to get missed in day to day tasks. Therefore, automating these steps becomes an essential part of the development process to maintain a clean code base with consistent formatting style across project & ensuring existing functionality remains intact. 
 
 As part of this project we look at how we can define an automated solution that integrates **linting** and **testing** into the development workflow, ensuring that only high-quality code gets committed or pushed.
 
@@ -53,37 +53,30 @@ Git hooks can be majorly categorized into two types -
 Husky ensures these hooks run automatically during Git operations. **`If a hook’s command fails, the associated Git operation is aborted`**.
 
 ## Lint-Staged
-[Lint-staged](https://github.com/lint-staged/lint-staged) allows to run linters against **`staged git files`** and ensures the code formatting & styles remains consistent across the code base. This makes the linting process efficient by avoiding checks on files unrelated to the current commit. It also allows to run lint with the **`--fix`** option to fix any auto-fixable errors & prevents committing broken or poorly formatted code. If any lint error cannot be fixed, the **commit is aborted**.
+[Lint-staged](https://github.com/lint-staged/lint-staged) executes the lint checks against the **`staged git files`** and basically gates the files being committed. It ensures code formatting/style remains consistent & there are no issues in the files staged files. These gate keeping checks are made efficient by including only the staged files. Optionally, list-staged can be run with the **`--fix`** option to ensure all auto-fixable errors are fixed automatically. The **commit is aborted** if any errors are reported.
 
 ### How Lint-Staged Works?
-- **Intercepts Staged Files:** Captures the list of files staged for commit (using `git diff --name-only --staged/--cached` -- [getStagedFiles](https://github.com/lint-staged/lint-staged/blob/master/lib/getStagedFiles.js#L13), [diff utilizing --staged](https://github.com/lint-staged/lint-staged/blob/master/lib/getDiffCommand.js#L9)).
-- **Applies Linting:** Runs specified linting commands on those files.
-- **Automatically Fixes Issues:** Optionally, applies fixes (e.g., via eslint --fix).
-- **Restages Fixed Files:** Restages the modified files, ensuring only clean files are committed.
+- Extract the files in the Git staging area & ready for commit (uses `git diff --name-only --staged/--cached` -- [getStagedFiles](https://github.com/lint-staged/lint-staged/blob/master/lib/getStagedFiles.js#L13), [diff utilizing --staged](https://github.com/lint-staged/lint-staged/blob/master/lib/getDiffCommand.js#L9)).
+- Triggers ESlint commands on the above extracted files.
+- Applies fixes to any all auto-fixable errors if **`--fix`** option was provided (e.g., via eslint --fix).
+- Adds the modified files back into the staging area.
 
 ## How Husky Hooks and Lint-Staged Work Together?
 Husky and Lint-Staged complement each other to enforce code quality standards during commits.
 
-1. Husky setups the pre-commit hook -
-   - Husky runs the pre-commit hook when a git commit is initiated.
-   - This hook invokes Lint-Staged.
-
-2. Lint-Staged Executes the Task -
-   - Lint-Staged intercepts the staged files.
-   - It runs the configured commands (e.g., eslint --fix) on these files.
-
-3. Outcome -
-   - If all lint checks pass, the commit proceeds.
-   - If any of the lint check fails (not auto-fixable/warnings), the commit is aborted, prompting the developer to fix the issues before retrying to commit again.
+1. Husky triggers the pre-commit hook on git commit & the hook executed the command for Lint-Staged.
+2. Lint-Staged triggers ESlint checks on the the staged files.
+3. The staged files are given a green light to proceed with commit for successful lint execution.
+4. The commit is blocked & aborted if any of the lint check fails (not auto-fixable/warnings), prompting the developer to fix the issues before retrying to commit again.
 
 The above process/steps will remain same for the pre-push hook to execute the jest unit tests before any commit in pushed to the remote branch. If any of the unit tests fails, then the **push operation is aborted, prompting the developer to fix the failing tests** before retrying to push again.
 
 ## Benefits of Combining Git Hooks, Husky, Lint-Staged & Jest Test Suite
 
-1. **Enforce Consistency:** Ensures clean code is committed/pushed. Prevents bad code from being committed or pushed.
-2. **Improve Efficiency:** Lint-staged focuses on staged files, saving time during linting. However, for executing the unit tests as part of the pre-push hook, the entire jest suite should be run to ensure functionality is not broken.
-3. **Team Collaboration:** Ensures all contributors adhere to the same standards & are forced to fix any issues/failures before making a commit.
-4. **Automated Workflow:** Reduces manual overhead for executing tests or worrying about the code formatting/styling.
+1. Always ensures clean code is committed/pushed.
+2. As Lint-staged focuses on staged files, allows for a faster lint execution time. However, for executing the unit tests as part of the pre-push hook, the entire jest suite should be run to ensure functionality is not broken.
+3. Ensures consistent standards are followed by every contributor & are forced to fix any issues/failures before making a commit.
+4. Reduces manual efforts by automating the workflow for executing tests or applying code formatting/styling.
    
 These tools & automation allow to create a robust, automated workflow for promoting clean, maintainable code while minimizing errors/failures in production.
 
@@ -203,4 +196,4 @@ You might land into the following issues when executing the hooks.
    
 ## Conclusion
 
-Automating git checks as part of hooks with Jest and ESLint is a simple yet very powerful way to enhance the day-to-day development workflow & activities. Tools like Husky and Lint-Staged enable seamless integration of Git hooks with any project and ensures that issues are caught and resolved early, maintain consistent code quality, and prevent broken builds & functionality. These tools allow to be proactive & catch issues early in the lifecycle rather than reacting to a broken build or production failure.
+Automating ESLint & Jest using git hooks is a very powerful way to enhance the daily workflow & activities for development. Tools like Husky and Lint-Staged enable seamless integration of Git hooks with any project and ensures that issues are caught and resolved early, maintain consistent code quality, and prevent broken builds & functionality. These tools allow to be proactive & catch issues early in the lifecycle rather than reacting to a broken build or production failure. is a simple yet very powerful way to enhance the day-to-day development workflow & activities. Tools like Husky and Lint-Staged enable seamless integration of Git hooks with any project and ensures that issues are caught and resolved early, maintain consistent code quality, and prevent broken builds & functionality. These tools allow to be proactive & catch issues early in the lifecycle rather than reacting to a broken build or production failure.
